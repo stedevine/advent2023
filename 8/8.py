@@ -1,10 +1,12 @@
 from collections import deque
 from math import gcd 
-def get_pos(v, i):
-    if i == 'L':
-        return v.split(',')[0][1:]
+def get_pos(value, instruction):
+    # instruction is L or R
+    # value is of the form ; (BBB, CCC)
+    if instruction == 'L':
+        return value.split(',')[0][1:]
 
-    return v.split(',')[1].strip()[:-1]
+    return value.split(',')[1].strip()[:-1]
 
 def enque(lines):
     inst = lines[0].strip()
@@ -17,27 +19,25 @@ def enque(lines):
 def get_map(lines):
     map = {}
     for i in range(2, len(lines)):
-        k = lines[i].split('=')[0].strip()
-        v = lines[i].split('=')[1].strip()
+        key = lines[i].split('=')[0].strip()
+        value = lines[i].split('=')[1].strip()
         #print(f'{k} -> {v}')
-        map[k] = v
+        map[key] = value 
     
     return map
 
 def part_1(lines):
-
     q = enque(lines)
     map = get_map(lines)
     
+    # start at AAA
     pos = 'AAA'
     steps = 0
     while True:
         i = q.popleft()
         q.append(i)
-        #print(i)
         steps += 1
         pos = get_pos(map[pos], i)
-        #print(pos)
         if pos == 'ZZZ' and steps % len(q) == 0:
             break
 
@@ -47,7 +47,6 @@ def part_2(lines):
     q = enque(lines)
     map = get_map(lines)
 
-    
     positions = list(filter(lambda a: a[-1] == 'A', map.keys()))
     pos_count = []
     for position in positions:
