@@ -14,7 +14,6 @@ def get_next_step(r,c,lines):
     if c < len(lines[r]) and lines[r][c+1] in ('-J7'):
         return (r,c+1, 'R')
 
-# How do you make the arrows ↑ ↓ → ← on your keyboard? 
 def part_1(lines):
     # find S
     # find one of the two pipes that connect S to the loop
